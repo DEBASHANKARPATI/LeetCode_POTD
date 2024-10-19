@@ -1,0 +1,19 @@
+class Solution {
+public:
+    string Invert(string str)
+    {
+        for(char& i:str) i=='0'?i='1':i='0';
+        reverse(str.begin(),str.end());
+        return str;
+    }
+    char findKthBit(int n, int k) {
+        string S = "0";
+        while(S.size()<k)
+        {
+            string I = Invert(S); 
+            S+='1'+I;
+            cout<<S<<endl;
+        }
+        return S[k-1];
+    }
+};
