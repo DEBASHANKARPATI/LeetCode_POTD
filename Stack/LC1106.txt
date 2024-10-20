@@ -1,0 +1,55 @@
+class Solution {
+public:
+    bool parseBoolExpr(string expression) {
+        stack<char> st;
+        for(char ch:expression)
+        {
+           if(ch==',') continue;
+           if(ch==')')
+           {
+             int falseCount = 0;
+             int TrueCount = 0;
+             while(!st.empty() && st.top()!='(')
+             {
+                if(st.top()=='t') TrueCount++;
+                else if(st.top()=='f') falseCount++;
+                st.pop();
+             }
+             st.pop();//remove '('
+             if(st.top()=='|')
+             {
+                st.pop();//'remove the operator'
+                if(TrueCount){
+                    st.push('t');
+                }
+                else
+                {
+                    st.push('f');
+                }
+             }
+             else if(st.top()=='&')
+             {
+                st.pop();//'remove the operator'
+                if(falseCount){
+                    st.push('f');
+                }
+                else
+                {
+                    st.push('t');
+                }
+             }
+             else if(st.top()=='!')
+             {
+               st.pop();
+               if(falseCount) st.push('t');
+               else if(TrueCount) st.push('f');
+             }
+           }
+           else
+           {
+              st.push(ch);
+           }
+        }
+        return st.top()=='t';
+    }
+};
